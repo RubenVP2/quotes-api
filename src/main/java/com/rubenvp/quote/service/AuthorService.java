@@ -14,11 +14,19 @@ public class AuthorService {
     private QuoteRepository quoteRepository;
 
     /**
-     * That methode return a list of quotes from a specific author
+     * That method return a list of quotes from a specific author
      * 
      * @param author The author you want to get quotes from
      */
     public List<Quote> getQuotesFromAuthor(String author) {
         return quoteRepository.findByAuthor(author);
     }
+
+    /**
+     * That method return a list of all authors
+     */
+    public List<String> getAllAuthors() {
+        return quoteRepository.findDistinctAuthors();
+    }
+
 }

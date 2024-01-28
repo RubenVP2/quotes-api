@@ -3,8 +3,8 @@ services:
 # Postgres database service
   db:
     image: postgres
-    container_name: postgres
-    restart: always
+    container_name: database
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -15,10 +15,25 @@ services:
       - ./postgresql/sql/:/docker-entrypoint-initdb.d/
       - ./postgresql/csv/:/csv/
 
-# Adminer service
-  adminer:
-    image: adminer
-    container_name: database-viewer
+# Adminer service (for viewing database)
+#  adminer:
+#    image: adminer
+#    container_name: database-viewer
+#    restart: unless-stopped
+#    ports:
+#      - 8989:8080
+
+# Spring Boot service
+  spring-boot:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: api
     restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 8989:8080
+      - 8080:8080
+    depends_on:
+      - db
