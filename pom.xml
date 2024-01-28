@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rubenvp</groupId>
-	<artifactId>Quote</artifactId>
+	<artifactId>quote</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Quote</name>
 	<description>Api for quote. Using free dataset from Kaggle.com</description>
