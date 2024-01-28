@@ -18,6 +18,7 @@
   		<sonar.organization>ruben-vp-quote-api</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,6 +45,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<settings>
+		<pluginGroups>
+			<pluginGroup>
+				org.sonarsource.scanner.maven
+			</pluginGroup>
+		</pluginGroups>
+	</settings>
 
 	<build>
 		<plugins>

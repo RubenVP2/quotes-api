@@ -1,8 +1,5 @@
 # Quotes API
-## SonarCloud
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=RubenVP2_quotes-api)](https://sonarcloud.io/summary/new_code?id=RubenVP2_quotes-api)
-## Codecov
-[![codecov](https://codecov.io/gh/RubenVP2/quotes-api/branch/main/graph/badge.svg?token=ZQZQZQZQZQ)](https://codecov.io/gh/RubenVP2/quotes-api)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=RubenVP2_quotes-api)
 
 ## Description
 This is a simple API that allows you to read quotes. All quotes are stored in a database and can be accessed through the API. The API is written in Java 17 and uses the Spring Boot framework. The database is a simple Postgresql database.  
