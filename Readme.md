@@ -1,4 +1,9 @@
 # Quotes API
+## SonarCloud
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=RubenVP2_quotes-api)](https://sonarcloud.io/summary/new_code?id=RubenVP2_quotes-api)
+## Codecov
+[![codecov](https://codecov.io/gh/RubenVP2/quotes-api/branch/main/graph/badge.svg?token=ZQZQZQZQZQ)](https://codecov.io/gh/RubenVP2/quotes-api)
+
 ## Description
 This is a simple API that allows you to read quotes. All quotes are stored in a database and can be accessed through the API. The API is written in Java 17 and uses the Spring Boot framework. The database is a simple Postgresql database.  
 The data is provided by [Kaggle](https://www.kaggle.com/datasets/manann/quotes-500k) and contains 500k quotes.  
@@ -26,3 +31,7 @@ If you don't want to use Docker, you can also run the API manually.
 3. Set the environment variables
 4. Run `mvn spring-boot:run` in the root directory
 5. The API is now running on port 8080
+
+## Documentation
+(TODO)
+

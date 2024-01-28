@@ -15,6 +15,8 @@
 	<description>Api for quote. Using free dataset from Kaggle.com</description>
 	<properties>
 		<java.version>17</java.version>
+  		<sonar.organization>ruben-vp-quote-api</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
