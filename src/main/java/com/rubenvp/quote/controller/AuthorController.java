@@ -3,33 +3,41 @@ package com.rubenvp.quote.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rubenvp.quote.model.Quote;
 import com.rubenvp.quote.service.AuthorService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/author")
 public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
 
     /**
-     * That method return a list of quotes from a specific author
+     * That method return a list of authors by name search term
      * 
-     * @param author The author you want to get quotes from
+     * @param search The search term for the author
      * @return
      */
-    @Operation(summary = "Get quotes from a specific author")
-    @GetMapping("/{author}")
-    public List<Quote> getQuotesFromAuthor(@PathVariable String author) {
-        return authorService.getQuotesFromAuthor(author);
+    @Operation(summary = "Get authors by search term")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the author(s)"),
+            @ApiResponse(responseCode = "400", description = "Search parameter must be provided")
+    })
+    @GetMapping("/author")
+    public ResponseEntity<?> getAuthorData(@RequestParam(value = "search", required = false) String search) {
+        if (search != null) {
+            return ResponseEntity.ok(authorService.getAuthorsBySearchTerm(search));
+        } else {
+            return ResponseEntity.badRequest().body("Either name or search parameter must be provided");
+        }
     }
 
     /**
@@ -38,9 +46,9 @@ public class AuthorController {
      * @return A list of all authors
      */
     @Operation(summary = "Get all authors")
-    @GetMapping
-    public List<String> getAllAuthors() {
-        return authorService.getAllAuthors();
+    @GetMapping("/authors")
+    public ResponseEntity<List<String>> getAllAuthors() {
+        return ResponseEntity.ok(authorService.getAllAuthors());
     }
 
 }
