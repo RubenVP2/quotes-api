@@ -8,6 +8,7 @@ This project was created for learning purposes.
 ## Technologies
 - Java 17 & Maven
 - Spring Boot
+- Swagger & OpenAPI
 - Postgresql
 - Docker & Docker Compose
 ## Usage
@@ -30,5 +31,6 @@ If you don't want to use Docker, you can also run the API manually.
 5. The API is now running on port 8080
 
 ## Documentation
-(TODO)
-
+The API documentation is available at `/swagger-ui/index.html` when the API is running.
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
