@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rubenvp.quote.service.AuthorService;
-import com.rubenvp.quote.model.Quote;
 
 @WebMvcTest(AuthorController.class)
 class AuthorControllerTest {
