@@ -1,6 +1,8 @@
 package com.rubenvp.quote.service;
 
 import org.springframework.stereotype.Service;
+
+import com.rubenvp.quote.dto.QuoteDto;
 import com.rubenvp.quote.model.Quote;
 import com.rubenvp.quote.repository.QuoteRepository;
 
@@ -36,7 +38,7 @@ public class QuoteService {
      * @return Page of quotes
      */
     public Page<Quote> getPageableQuotesByTextSearch(int page, int size, String search) {
-        return quoteRepository.findByQuote(search, PageRequest.of(page, size));
+        return quoteRepository.findByQuoteContainingIgnoreCase(search, PageRequest.of(page, size));
     }
 
     /**
@@ -48,7 +50,7 @@ public class QuoteService {
      * @return Page of quotes
      */
     public Page<Quote> getPageableQuotesByCategory(int page, int size, String category) {
-        return quoteRepository.findByCategory(category, PageRequest.of(page, size));
+        return quoteRepository.findByCategoryContainingIgnoreCase(category, PageRequest.of(page, size));
     }
 
     /**
@@ -60,7 +62,7 @@ public class QuoteService {
      * @return Page of quotes
      */
     public Page<Quote> getPageableQuotesByAuthor(int page, int size, String author) {
-        return quoteRepository.findByAuthor(author, PageRequest.of(page, size));
+        return quoteRepository.findByAuthorContainingIgnoreCase(author, PageRequest.of(page, size));
     }
 
     /**
@@ -71,6 +73,47 @@ public class QuoteService {
      */
     public Quote getQuoteById(@NonNull Long id) {
         return quoteRepository.findById(id).orElseThrow();
+    }
+
+    /**
+     * Get random Quote
+     */
+    public Quote getRandomQuote() {
+        return quoteRepository.findRandomQuote();
+    }
+
+    /**
+     * Add quote to database
+     * 
+     * @param quote Quote to add
+     */
+    public Quote addQuote(@NonNull Quote quote) {
+        return quoteRepository.save(quote);
+    }
+
+    /**
+     * Update quote in database
+     * 
+     * @param quote    Quote to update
+     * @param quoteDto Quote data received
+     * @return Quote updated
+     */
+    public Quote updateQuote(Quote quote, QuoteDto quoteDto) {
+        quote.setQuote(quoteDto.getQuote());
+        quote.setAuthor(quoteDto.getAuthor());
+        quote.setCategory(quoteDto.getCategory());
+        return quoteRepository.save(quote);
+    }
+
+    /**
+     * Delete quote from database
+     * 
+     * @param quote Quote to delete
+     * @return Quote deleted
+     */
+    public Quote deleteQuote(@NonNull Quote quote) {
+        quoteRepository.delete(quote);
+        return quote;
     }
 
 }

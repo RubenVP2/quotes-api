@@ -2,8 +2,9 @@ package com.rubenvp.quote.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import com.rubenvp.quote.model.Quote;
 import com.rubenvp.quote.repository.QuoteRepository;
 
 @Service
@@ -15,6 +16,7 @@ public class AuthorService {
     /**
      * That method return a list of all authors
      */
+    @Cacheable("authors")
     public List<String> getAllAuthors() {
         return quoteRepository.findDistinctAuthors();
     }
@@ -26,7 +28,9 @@ public class AuthorService {
      * @return
      */
     public List<String> getAuthorsBySearchTerm(String search) {
-        return quoteRepository.findDistinctAuthorsBySearchTerm(search);
+        return quoteRepository.findByAuthorContainingIgnoreCase(search)
+                .stream().map(Quote::getAuthor)
+                .distinct().toList();
     }
 
 }

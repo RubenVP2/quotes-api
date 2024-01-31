@@ -1,13 +1,11 @@
 package com.rubenvp.quote.repository;
 
 import java.util.List;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.rubenvp.quote.model.Quote;
 
 @Repository
@@ -17,21 +15,25 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     @Query("SELECT DISTINCT q.author FROM Quote q")
     List<String> findDistinctAuthors();
 
-    // Return authors by search term
-    @Query("SELECT DISTINCT q.author FROM Quote q WHERE q.author LIKE %?1%")
-    List<String> findDistinctAuthorsBySearchTerm(String search);
+    // Return all authors find in database by search (case insensitive)
+    // If search = em, it will return all authors containing emp (example:
+    // Hemingway)
+    List<Quote> findByAuthorContainingIgnoreCase(String search);
 
     // Return a list of all categories
     @Query("SELECT DISTINCT q.category FROM Quote q")
     List<String> findDistinctCategories();
 
-    // Return categories by search term
-    Page<Quote> findByCategory(String category, PageRequest of);
+    // Return quotes by category search term (case insensitive)
+    Page<Quote> findByCategoryContainingIgnoreCase(String category, PageRequest of);
 
-    // Return quotes by search term
-    Page<Quote> findByAuthor(String author, PageRequest of);
+    // Return quotes by author search term (case insensitive)
+    Page<Quote> findByAuthorContainingIgnoreCase(String author, PageRequest of);
 
-    // Return quotes by search term
-    @Query("SELECT q FROM Quote q WHERE q.quote LIKE %?1%")
-    Page<Quote> findByQuote(String search, PageRequest of);
+    // Return quotes by search term (case insensitive)
+    Page<Quote> findByQuoteContainingIgnoreCase(String search, PageRequest of);
+
+    // Return random quote
+    @Query(value = "SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Quote findRandomQuote();
 }

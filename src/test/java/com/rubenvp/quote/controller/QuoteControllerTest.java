@@ -1,12 +1,12 @@
 package com.rubenvp.quote.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,8 +19,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rubenvp.quote.dto.QuoteDto;
 import com.rubenvp.quote.model.Quote;
 import com.rubenvp.quote.service.QuoteService;
 
@@ -194,5 +194,79 @@ class QuoteControllerTest {
                 .andDo(print());
 
         verify(quoteService, times(1)).getQuoteById(1L);
+    }
+
+    @Test
+    void getRandomQuote() throws Exception {
+
+        // Mock random quote
+        Mockito.doReturn(mockedQuotes.get(0)).when(quoteService).getRandomQuote();
+
+        mvc.perform(MockMvcRequestBuilders.get("/quotes/random").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(print())
+                .andExpect(result -> objectMapper.writeValueAsString(mockedQuotes.get(0)));
+
+        verify(quoteService, times(1)).getRandomQuote();
+    }
+
+    @Test
+    void addNewQuoteToTheDatabase() throws Exception {
+
+        // Mock post request with quoteDto, author and category str
+        QuoteDto quoteToAdd = new QuoteDto("Quote 1", "Author 1", "Category 1");
+        Quote quote = new Quote(1L, "Quote 1", "Author 1", "Category 1");
+
+        // Mock quote added
+        Mockito.doReturn(quote).when(quoteService).addQuote(quoteToAdd.toQuote());
+
+        // Content for post request
+        String content = objectMapper.writeValueAsString(quoteToAdd);
+
+        mvc.perform(MockMvcRequestBuilders.post("/quotes").contentType(MediaType.APPLICATION_JSON)
+                .content(content != null ? content : "")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(result -> objectMapper.writeValueAsString(quote));
+
+    }
+
+    @Test
+    void updateQuoteFromTheDatabase() throws Exception {
+
+        // Mock put request with quoteDto
+        QuoteDto quoteToUpdate = new QuoteDto("Quote 1", "Author 1", "Category 1");
+        Quote quote = new Quote(1L, "Quote 1", "Author 1", "Category 1");
+
+        // Mock quote updated
+        Mockito.doReturn(quote).when(quoteService).getQuoteById(1L);
+        Mockito.doReturn(quote).when(quoteService).updateQuote(any(Quote.class), any(QuoteDto.class));
+
+        // Content for put request
+        String content = objectMapper.writeValueAsString(quoteToUpdate);
+
+        mvc.perform(MockMvcRequestBuilders.put("/quotes/1/").contentType(MediaType.APPLICATION_JSON)
+                .content(content != null ? content : "")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(result -> objectMapper.writeValueAsString(quote));
+
+    }
+
+    @Test
+    void deleteQuoteFromTheDatabase() throws Exception {
+
+        // Mock delete request with PathVariable id
+        Quote quote = new Quote(1L, "Quote 1", "Author 1", "Category 1");
+
+        // Mock quote deleted
+        Mockito.doReturn(quote).when(quoteService).getQuoteById(1L);
+        Mockito.doReturn(quote).when(quoteService).deleteQuote(quote);
+
+        mvc.perform(MockMvcRequestBuilders.delete("/quotes/", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(result -> objectMapper.writeValueAsString(quote));
+
     }
 }
