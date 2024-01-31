@@ -40,6 +40,8 @@ class QuoteControllerTest {
     private PageRequest pageRequest;
     private List<Quote> mockedQuotes;
 
+    final private String CONTENT_TYPE = "application/json;charset=UTF-8";
+
     @BeforeEach
     void setUp() throws Exception {
 
@@ -58,7 +60,7 @@ class QuoteControllerTest {
 
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotes(0, 3);
 
-        mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3").accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -71,7 +73,7 @@ class QuoteControllerTest {
         mockedQuotePage = new PageImpl<>(new ArrayList<Quote>(), pageRequest, 0);
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotes(0, 3);
 
-        mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3").accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -84,7 +86,7 @@ class QuoteControllerTest {
 
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotes(0, 10);
 
-        mvc.perform(MockMvcRequestBuilders.get("/quotes").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes").accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -98,7 +100,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByCategory(0, 3, "Category 1");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&category=Category 1")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByCategory(0, 3, "Category 1");
     }
@@ -111,7 +113,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByCategory(0, 3, "Category 1");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&category=Category 1")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByCategory(0, 3, "Category 1");
 
@@ -124,7 +126,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByAuthor(0, 3, "Author 1");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&author=Author 1")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByAuthor(0, 3, "Author 1");
 
@@ -138,7 +140,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByAuthor(0, 3, "Author 1");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&author=Author 1")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByAuthor(0, 3, "Author 1");
 
@@ -151,7 +153,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByTextSearch(0, 3, "Quote");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&search=Quote")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByTextSearch(0, 3, "Quote");
     }
@@ -164,7 +166,7 @@ class QuoteControllerTest {
         Mockito.doReturn(mockedQuotePage).when(quoteService).getPageableQuotesByTextSearch(0, 3, "Quote");
 
         mvc.perform(MockMvcRequestBuilders.get("/quotes?page=0&size=3&search=Quote")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+                .accept(CONTENT_TYPE)).andExpect(status().isOk()).andDo(print());
 
         verify(quoteService, times(1)).getPageableQuotesByTextSearch(0, 3, "Quote");
     }
@@ -175,7 +177,7 @@ class QuoteControllerTest {
         // Mock quote by id
         Mockito.doReturn(mockedQuotes.get(0)).when(quoteService).getQuoteById(1L);
 
-        mvc.perform(MockMvcRequestBuilders.get("/quotes/1").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes/1").accept(CONTENT_TYPE))
                 .andExpect(status().isOk()).andDo(print())
                 .andExpect(result -> objectMapper.writeValueAsString(mockedQuotes.get(0)));
 
@@ -189,7 +191,7 @@ class QuoteControllerTest {
         Mockito.doReturn(null).when(quoteService).getQuoteById(1L);
 
         // Test if Exception is thrown
-        mvc.perform(MockMvcRequestBuilders.get("/quotes/1").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes/1").accept(CONTENT_TYPE))
                 .andExpect(status().isNotFound())
                 .andDo(print());
 
@@ -202,7 +204,7 @@ class QuoteControllerTest {
         // Mock random quote
         Mockito.doReturn(mockedQuotes.get(0)).when(quoteService).getRandomQuote();
 
-        mvc.perform(MockMvcRequestBuilders.get("/quotes/random").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/quotes/random").accept(CONTENT_TYPE))
                 .andExpect(status().isOk()).andDo(print())
                 .andExpect(result -> objectMapper.writeValueAsString(mockedQuotes.get(0)));
 
@@ -222,9 +224,9 @@ class QuoteControllerTest {
         // Content for post request
         String content = objectMapper.writeValueAsString(quoteToAdd);
 
-        mvc.perform(MockMvcRequestBuilders.post("/quotes").contentType(MediaType.APPLICATION_JSON)
+        mvc.perform(MockMvcRequestBuilders.post("/quotes").contentType(CONTENT_TYPE)
                 .content(content != null ? content : "")
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andExpect(result -> objectMapper.writeValueAsString(quote));
 
@@ -244,9 +246,9 @@ class QuoteControllerTest {
         // Content for put request
         String content = objectMapper.writeValueAsString(quoteToUpdate);
 
-        mvc.perform(MockMvcRequestBuilders.put("/quotes/1/").contentType(MediaType.APPLICATION_JSON)
+        mvc.perform(MockMvcRequestBuilders.put("/quotes/{id}", 1L).contentType(CONTENT_TYPE)
                 .content(content != null ? content : "")
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andExpect(result -> objectMapper.writeValueAsString(quote));
 
@@ -262,9 +264,9 @@ class QuoteControllerTest {
         Mockito.doReturn(quote).when(quoteService).getQuoteById(1L);
         Mockito.doReturn(quote).when(quoteService).deleteQuote(quote);
 
-        mvc.perform(MockMvcRequestBuilders.delete("/quotes/", 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.delete("/quotes/{id}", 1L)
+                .contentType(CONTENT_TYPE)
+                .accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andExpect(result -> objectMapper.writeValueAsString(quote));
 
