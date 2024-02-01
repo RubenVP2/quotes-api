@@ -29,12 +29,6 @@ class CategoryControllerTest {
 
     @Test
     void getAllCategory() throws Exception {
-        // Category are stored in database il column of type String
-        // One row of quote table can have multiple category separated by comma
-        // So we need to split the category column by comma and return a list of
-        // category
-        // Example: "category1,category2,category3" -> ["category1", "category2",
-        // "category3"]
 
         // Mock Category
         List<String> mockedCategory = new ArrayList<String>();
@@ -47,7 +41,7 @@ class CategoryControllerTest {
         // Convert the object to JSON
         final String expectedResponse = objectMapper.writeValueAsString(mockedCategory);
 
-        mvc.perform(MockMvcRequestBuilders.get("/category").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/categories").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().json(expectedResponse));
     }
 
