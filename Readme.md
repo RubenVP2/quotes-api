@@ -21,11 +21,15 @@ This project was created for learning purposes.
 ### ⚙️ Environment variables
 The following environment variables are required to run the API:
 - `POSTGRES_USER`: The username for the database
-- `POSTGRES_PASSWORD`: The password for the database
-You need to set these variables in the `docker-compose.yml` file or create a `.env` file in the root directory.
+- `POSTGRES_PASSWORD`: The password for the database  
+
+You need to set these variables in the `docker-compose.yml` file or create a `.env` file in the root directory.  
+Spring boot also requires this environment variables, they are set in the `application.properties` file.
 ### 🐋 Docker
 The easiest way to run the API is to use Docker.
 1. Clone the repository
+2. Create a `.env` file in the root directory and set the environment variables
+3. Change the `localhost` in the `application.properties` file to `db`
 2. Run `docker-compose up` in the root directory
 3. The API is now running on port 8080
 ### ✍️ Manual
@@ -36,6 +40,8 @@ If you don't want to use Docker, you can also run the API manually.
 4. Run `mvn spring-boot:run` in the root directory
 5. The API is now running on port 8080
 
+If you want to get the data from Kaggle, you need to download the data and import it into the database. (The data is not included in this repository because it is too large)
+In SQL folder you can find the SQL file to create the table and import the data.
 ## 📜 Documentation
 The API documentation is available at `/swagger-ui/index.html` when the API is running.
 ## 🪪 License
