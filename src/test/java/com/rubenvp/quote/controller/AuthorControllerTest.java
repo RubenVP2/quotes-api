@@ -65,36 +65,4 @@ class AuthorControllerTest {
 
     }
 
-    @Test
-    void getAuthorsBySearch() throws Exception {
-
-        // Mock quotes
-        List<String> mockedAuthors = new ArrayList<String>();
-        mockedAuthors.add("Author 1");
-        mockedAuthors.add("Author 2");
-        mockedAuthors.add("Author 3");
-        Mockito.doReturn(mockedAuthors).when(authorService).getAuthorsBySearchTerm("Author");
-
-        // Convert the object to JSON
-        final String expectedResponse = objectMapper.writeValueAsString(mockedAuthors);
-
-        mvc.perform(MockMvcRequestBuilders.get("/author?search=Author").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(expectedResponse));
-    }
-
-    @Test
-    void getAuthorsBySearchNotFound() throws Exception {
-
-        // Mock quotes
-        List<String> mockedAuthors = new ArrayList<String>();
-        Mockito.doReturn(mockedAuthors).when(authorService).getAuthorsBySearchTerm("Author");
-
-        // Convert the object to JSON
-        final String expectedResponse = objectMapper.writeValueAsString(mockedAuthors);
-
-        mvc.perform(MockMvcRequestBuilders.get("/author?search=Author").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(expectedResponse));
-    }
 }

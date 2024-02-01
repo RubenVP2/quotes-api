@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.rubenvp</groupId>
 	<artifactId>quote</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Quote</name>
 	<description>Api for quote. Using free dataset from Kaggle.com</description>
 	<properties>

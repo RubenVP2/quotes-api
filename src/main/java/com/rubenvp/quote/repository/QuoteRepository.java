@@ -15,11 +15,6 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     @Query("SELECT DISTINCT q.author FROM Quote q")
     List<String> findDistinctAuthors();
 
-    // Return all authors find in database by search (case insensitive)
-    // If search = em, it will return all authors containing emp (example:
-    // Hemingway)
-    List<Quote> findByAuthorContainingIgnoreCase(String search);
-
     // Return a list of all categories
     @Query("SELECT DISTINCT q.category FROM Quote q")
     List<String> findDistinctCategories();

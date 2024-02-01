@@ -7,13 +7,12 @@
 <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white">
 <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
 
-
 ## 🗨️ Description
 This is a simple API that allows you to read quotes. All quotes are stored in a database and can be accessed through the API. The API is written in Java 17 and uses the Spring Boot framework. The database is a simple Postgresql database.  
 The data is provided by [Kaggle](https://www.kaggle.com/datasets/manann/quotes-500k) and contains 500k quotes.  
 This project was created for learning purposes.
 ## 🗃️ Technologies
-- Java 17 & Maven
+- Java 21 & Maven
 - Spring Boot
 - Swagger & OpenAPI
 - Postgresql
